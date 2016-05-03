@@ -1,81 +1,54 @@
 /******************************************************************************
-* Copyright (c) 2011
-* Locomotec
-*
 * Author:
-* Sebastian Blumenthal
-*
-*
-* This software is published under a dual-license: GNU Lesser General Public
-* License LGPL 2.1 and BSD license. The dual-license implies that users of this
-* code may choose which terms they prefer.
-*
-* Redistribution and use in source and binary forms, with or without
-* modification, are permitted provided that the following conditions are met:
-*
-* * Redistributions of source code must retain the above copyright
-* notice, this list of conditions and the following disclaimer.
-* * Redistributions in binary form must reproduce the above copyright
-* notice, this list of conditions and the following disclaimer in the
-* documentation and/or other materials provided with the distribution.
-* * Neither the name of Locomotec nor the names of its
-* contributors may be used to endorse or promote products derived from
-* this software without specific prior written permission.
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU Lesser General Public License LGPL as
-* published by the Free Software Foundation, either version 2.1 of the
-* License, or (at your option) any later version or the BSD license.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-* GNU Lesser General Public License LGPL and the BSD license for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License LGPL and BSD license along with this program.
-*
+* Julien Van Loo
 ******************************************************************************/
 
+#include <vector>
 #include "youbot_driver/youbot/YouBotBase.hpp"
 #include "youbot_driver/youbot/YouBotManipulator.hpp"
 
+using namespace std;
 using namespace youbot;
 
+YouBotBase* createBase() {
+    /* create a youbot base, return the base or NULL if could not create it */
+    YouBotBase* base;
+    try {
+        base = new YouBotBase("youbot-base", YOUBOT_CONFIGURATIONS_DIR);
+        base->doJointCommutation();
+    } catch (std::exception& e) {
+        LOG(warning) << e.what();
+        base = NULL;
+    }
+    return base;
+}
+
+YouBotManipulator* createArm() {
+    /* create a youbot arm, return the arm or NULL if could not create it */
+    YouBotManipulator* arm;
+    try {
+        arm = new YouBotManipulator("youbot-manipulator", YOUBOT_CONFIGURATIONS_DIR);
+        arm->doJointCommutation();
+        arm->calibrateManipulator();
+    } catch (std::exception& e) {
+        LOG(warning) << e.what();
+        arm = NULL;
+    }
+    return arm;
+}
+
+void setBasePosition(YouBotBase* base, vector<int> position, int orientation, int velocity) {
+    base->setBaseVelocity(longitudinalVelocity, transversalVelocity, orientation*radians_per_second);
+}
+
 int main() {
-
-	/* configuration flags for different system configuration (e.g. base without arm)*/
-	bool youBotHasBase = false;
-	bool youBotHasArm = false;
-
 	/* define velocities */
 	double translationalVelocity = 0.05; //meter_per_second
 	double rotationalVelocity = 0.2; //radian_per_second
 
 	/* create handles for youBot base and manipulator (if available) */
-	YouBotBase* myYouBotBase = 0;
-	YouBotManipulator* myYouBotManipulator = 0;
-
-	try {
-		myYouBotBase = new YouBotBase("youbot-base", YOUBOT_CONFIGURATIONS_DIR);
-		myYouBotBase->doJointCommutation();
-
-		youBotHasBase = true;
-	} catch (std::exception& e) {
-		LOG(warning) << e.what();
-		youBotHasBase = false;
-	}
-
-	try {
-		myYouBotManipulator = new YouBotManipulator("youbot-manipulator", YOUBOT_CONFIGURATIONS_DIR);
-		myYouBotManipulator->doJointCommutation();
-		myYouBotManipulator->calibrateManipulator();
-
-		youBotHasArm = true;
-	} catch (std::exception& e) {
-		LOG(warning) << e.what();
-		youBotHasArm = false;
-	}
+    YouBotBase* base = createBase();
+    YouBotManipulator* arm = createArm();
 
 	/*
 	* Variable for the base.
@@ -93,19 +66,19 @@ int main() {
 		 * Simple sequence of commands to the youBot:
 		 */
 
-		if (youBotHasBase) {
+        if (base) {
 
 			/* forward */
 			longitudinalVelocity = translationalVelocity * meter_per_second;
 			transversalVelocity = 0 * meter_per_second;
-			myYouBotBase->setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+            base->setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
 			LOG(info) << "drive forward";
 			SLEEP_MILLISEC(2000);
 
 			/* backwards */
 			longitudinalVelocity = -translationalVelocity * meter_per_second;
 			transversalVelocity = 0 * meter_per_second;
-			myYouBotBase->setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+            base->setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
 			LOG(info) << "drive backwards";
 			SLEEP_MILLISEC(2000);
 
@@ -113,7 +86,7 @@ int main() {
 			longitudinalVelocity = 0 * meter_per_second;
 			transversalVelocity = translationalVelocity * meter_per_second;
 			angularVelocity = 0 * radian_per_second;
-			myYouBotBase->setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+            base->setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
 			LOG(info) << "drive left";
 			SLEEP_MILLISEC(2000);
 
@@ -121,7 +94,7 @@ int main() {
 			longitudinalVelocity = 0 * meter_per_second;
 			transversalVelocity = -translationalVelocity * meter_per_second;
 			angularVelocity = 0 * radian_per_second;
-			myYouBotBase->setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+            base->setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
 			LOG(info) << "drive right";
 			SLEEP_MILLISEC(2000);
 
@@ -129,40 +102,40 @@ int main() {
 			longitudinalVelocity = 0 * meter_per_second;
 			transversalVelocity = 0 * meter_per_second;
 			angularVelocity = 0 * radian_per_second;
-			myYouBotBase->setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
+            base->setBaseVelocity(longitudinalVelocity, transversalVelocity, angularVelocity);
 			LOG(info) << "stop base";
 		}
 
-		if (youBotHasArm) {
+        if (arm) {
 
 			/* unfold arm 
 			 * all of the following constants are empirically determined to move the arm into the desired position 
 			 */
 			desiredJointAngle.angle = 2.56244 * radian;
-			myYouBotManipulator->getArmJoint(1).setData(desiredJointAngle);
+            arm->getArmJoint(1).setData(desiredJointAngle);
 
 			desiredJointAngle.angle = 1.04883 * radian;
-			myYouBotManipulator->getArmJoint(2).setData(desiredJointAngle);
+            arm->getArmJoint(2).setData(desiredJointAngle);
 
 			desiredJointAngle.angle = -2.43523 * radian;
-			myYouBotManipulator->getArmJoint(3).setData(desiredJointAngle);
+            arm->getArmJoint(3).setData(desiredJointAngle);
 
 			desiredJointAngle.angle = 1.73184 * radian;
-			myYouBotManipulator->getArmJoint(4).setData(desiredJointAngle);
+            arm->getArmJoint(4).setData(desiredJointAngle);
 			LOG(info) << "unfold arm";
 			SLEEP_MILLISEC(4000);
 
 			/* fold arm (approx. home position) using empirically determined values for the positions */
 			desiredJointAngle.angle = 0.11 * radian;
-			myYouBotManipulator->getArmJoint(1).setData(desiredJointAngle);
+            arm->getArmJoint(1).setData(desiredJointAngle);
 
 			desiredJointAngle.angle = 0.11 * radian;
-			myYouBotManipulator->getArmJoint(2).setData(desiredJointAngle);
+            arm->getArmJoint(2).setData(desiredJointAngle);
 
 			desiredJointAngle.angle = -0.11 * radian;
-			myYouBotManipulator->getArmJoint(3).setData(desiredJointAngle);
+            arm->getArmJoint(3).setData(desiredJointAngle);
 			desiredJointAngle.angle = 0.11 * radian;
-			myYouBotManipulator->getArmJoint(4).setData(desiredJointAngle);
+            arm->getArmJoint(4).setData(desiredJointAngle);
 			LOG(info) << "fold arm";
 			SLEEP_MILLISEC(4000);
 		}
@@ -173,13 +146,13 @@ int main() {
 	}
 
 	/* clean up */
-	if (myYouBotBase) {
-		delete myYouBotBase;
-		myYouBotBase = 0;
+    if (base) {
+        delete base;
+        //myYouBotBase = 0;
 	}
-	if (myYouBotManipulator) {
-		delete myYouBotManipulator;
-		myYouBotManipulator = 0;
+    if (arm) {
+        delete arm;
+        //myYouBotManipulator = 0;
 	}
 
 	LOG(info) << "Done.";

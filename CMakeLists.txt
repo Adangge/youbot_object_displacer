@@ -205,7 +205,7 @@ target_link_libraries(object_displacer
 
 OPTION(USE_SETCAP "Set permissions to access ethernet interface without sudo" ON)
 
-SET(SUDO_COMMAND gksudo)
+SET(SUDO_COMMAND sudo)
 IF($ENV{USE_NORMAL_SUDO})
     SET(SUDO_COMMAND sudo)
 ENDIF($ENV{USE_NORMAL_SUDO})
