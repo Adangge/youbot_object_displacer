@@ -8,11 +8,33 @@
 #include "brics_actuator/JointPositions.h"
 #include "geometry_msgs/Twist.h"
 
+#include <iostream>
+#include <fstream>
+
 using namespace std;
 
 ros::Publisher platformPublisher;
 ros::Publisher armPublisher;
 ros::Publisher gripperPublisher;
+
+vector< vector<double> > loadAnglesValues(string filename) {
+    vector< vector<double> > outputAngles;
+    string value;
+    ifstream f;
+    f.open(filename.c_str());
+    while (!f.eof())
+    {
+        vector<double> currentPoint;
+        for (int i=0; i<5; i++)
+        {
+            f >> value;
+            currentPoint.push_back(atof(value.c_str()));
+        }
+        outputAngles.push_back(currentPoint);
+    }
+    f.close();
+    return outputAngles;
+}
 
 // create a brics actuator message with the given joint position values
 brics_actuator::JointPositions createArmPositionCommand(vector<double>& newPositions) {
@@ -93,23 +115,84 @@ void moveArm() {
     brics_actuator::JointPositions msg;
     vector<double> jointvalues(5);
 
+
     // move arm straight up. values were determined empirically
-    jointvalues[0] = 2.95;
-    jointvalues[1] = 1.05;
-    jointvalues[2] = -2.44;
-    jointvalues[3] = 1.73;
-    jointvalues[4] = 2.95;
+    jointvalues[0] = -3.147;
+    jointvalues[1] = 0.56874;
+    jointvalues[2] = 0.695891;
+    jointvalues[3] = -1.94531;
+    jointvalues[4] = 0;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
     ros::Duration(5).sleep();
 
     // move arm back close to calibration position
-    jointvalues[0] = 0.11;
-    jointvalues[1] = 0.11;
-    jointvalues[2] = -0.11;
-    jointvalues[3] = 0.11;
-    jointvalues[4] = 0.111;
+    jointvalues[0] = -2.94961;
+    jointvalues[1] = -0.0335571;
+    jointvalues[2] = 0.65143;
+    jointvalues[3] = -1.29855;
+    jointvalues[4] = 0;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+
+    jointvalues[0] = -2.16421;
+    jointvalues[1] = -1.37512 ;
+    jointvalues[2] = 0.528414;
+    jointvalues[3] = 0.166033;
+    jointvalues[4] = 0;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+
+    jointvalues[0] = -2.44251;
+    jointvalues[1] = -2.52041 ;
+    jointvalues[2] = 1.76995;
+    jointvalues[3] = -0.97741;
+    jointvalues[4] = 0;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+
+    jointvalues[0] = -2.94961;
+    jointvalues[1] = -1.22819 ;
+    jointvalues[2] = 1.06134;
+    jointvalues[3] = -1.56102;
+    jointvalues[4] = 0;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+
+    jointvalues[0] = -2.94961;
+    jointvalues[1] = -0.84809 ;
+    jointvalues[2] = 1.49785;
+    jointvalues[3] = -2.34624;
+    jointvalues[4] = 0;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+
+    jointvalues[0] = -2.94961;
+    jointvalues[1] = -0.846735 ;
+    jointvalues[2] = 2.17819;
+    jointvalues[3] = -3.02793;
+    jointvalues[4] = 0;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+
+    jointvalues[0] = -3.89309;
+    jointvalues[1] = -1.27728 ;
+    jointvalues[2] = 1.8776;
+    jointvalues[3] = -2.2968;
+    jointvalues[4] = 0;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
@@ -132,7 +215,10 @@ void moveGripper() {
 }
 
 int main(int argc, char **argv) {
-    ros::init(argc, argv, "youbot_ros_hello_world");
+    cout << "Loading values..." << endl;
+    vector< vector<double> > values = loadAnglesValues("/home/ros/git/Qt/COMPILED_FILES/build-object_displacer_gui-Desktop-Debug/results");
+
+    ros::init(argc, argv, "object_displacer");
     ros::NodeHandle n;
 
     platformPublisher = n.advertise<geometry_msgs::Twist>("cmd_vel", 1);
@@ -140,9 +226,23 @@ int main(int argc, char **argv) {
     gripperPublisher = n.advertise<brics_actuator::JointPositions>("arm_1/gripper_controller/position_command", 1);
     sleep(1);
 
-    movePlatform();
-    moveArm();
-    moveGripper();
+    brics_actuator::JointPositions msg;
+    for (int i=0; i<values.size(); i++)
+    {
+        msg = createArmPositionCommand(values[i]);
+        for (int j=0; i<5; j++)
+        {
+            cout << values[i][j] << "\t";
+        }
+        cout << endl;
+        armPublisher.publish(msg);
+
+        ros::Duration(5).sleep();
+    }
+
+    //movePlatform();
+    //moveArm();
+    //moveGripper();
 
     sleep(1);
     ros::shutdown();
