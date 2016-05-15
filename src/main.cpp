@@ -17,11 +17,14 @@ ros::Publisher platformPublisher;
 ros::Publisher armPublisher;
 ros::Publisher gripperPublisher;
 
-vector< vector<double> > loadAnglesValues(string filename) {
+vector< vector<double> > loadAnglesValues(/*char* filename*/) {
+    //cout << *filename;
+    cout << "test";
     vector< vector<double> > outputAngles;
-    string value;
+    outputAngles.resize(1, vector<double>(5, 0));
+    /*string value;
     ifstream f;
-    f.open(filename.c_str());
+    f.open("/home/ros/git/Qt/COMPILED_FILES/build-object_displacer_gui-Desktop-Debug/results");
     while (!f.eof())
     {
         vector<double> currentPoint;
@@ -32,7 +35,7 @@ vector< vector<double> > loadAnglesValues(string filename) {
         }
         outputAngles.push_back(currentPoint);
     }
-    f.close();
+    f.close();*/
     return outputAngles;
 }
 
@@ -216,7 +219,8 @@ void moveGripper() {
 
 int main(int argc, char **argv) {
     cout << "Loading values..." << endl;
-    vector< vector<double> > values = loadAnglesValues("/home/ros/git/Qt/COMPILED_FILES/build-object_displacer_gui-Desktop-Debug/results");
+    cout << argv[1] << endl;
+    vector< vector<double> > values = loadAnglesValues(/*argv[1]*/);
 
     ros::init(argc, argv, "object_displacer");
     ros::NodeHandle n;
