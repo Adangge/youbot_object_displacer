@@ -12,7 +12,7 @@
 #include <fstream>
 
 #define OPENED_GRIPPER    0.011
-#define CLOSED_GRIPPER  0
+#define CLOSED_GRIPPER  0.0015
 
 using namespace std;
 
@@ -252,16 +252,21 @@ int main(int argc, char **argv) {
     brics_actuator::JointPositions msg;
     cout << "Starting" << endl;
     moveGripper(OPENED_GRIPPER);
-    msg = createArmPositionCommand(values[0]);
-    for (int j=0; j<5; j++)
+    for (int i=0; i<2; i++)
     {
-        cout << values[0][j] << "\t";
-    }
-    armPublisher.publish(msg);
+        msg = createArmPositionCommand(values[i]);
+        cout << "Point n°" << i << ":\t";
+        for (int j=0; j<5; j++)
+        {
+            cout << values[0][j] << "\t";
+        }
+        cout << endl;
+        armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+        ros::Duration(2).sleep();
+    }
     moveGripper(CLOSED_GRIPPER);
-    for (int i=1; i<values.size(); i++)
+    for (int i=2; i<values.size(); i++)
     {
         msg = createArmPositionCommand(values[i]);
         cout << "Point n°" << i << ":\t";
