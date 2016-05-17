@@ -269,6 +269,7 @@ int main(int argc, char **argv) {
         {
             cout << values[i][j] << "\t";
         }
+        cout << endl;
         armPublisher.publish(msg);
 
         ros::Duration(2).sleep();
