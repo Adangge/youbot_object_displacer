@@ -17,25 +17,29 @@ ros::Publisher platformPublisher;
 ros::Publisher armPublisher;
 ros::Publisher gripperPublisher;
 
-vector< vector<double> > loadAnglesValues(/*char* filename*/) {
-    //cout << *filename;
-    cout << "test";
+vector< vector<double> > loadAnglesValues(char* filename) {
     vector< vector<double> > outputAngles;
-    outputAngles.resize(1, vector<double>(5, 0));
-    /*string value;
+    string value;
     ifstream f;
-    f.open("/home/ros/git/Qt/COMPILED_FILES/build-object_displacer_gui-Desktop-Debug/results");
-    while (!f.eof())
+    f.open(filename);
+    if (f.is_open())
     {
-        vector<double> currentPoint;
-        for (int i=0; i<5; i++)
+        while (!f.eof())
         {
-            f >> value;
-            currentPoint.push_back(atof(value.c_str()));
+            vector<double> currentPoint;
+            for (int i=0; i<5; i++)
+            {
+                f >> value;
+                currentPoint.push_back(atof(value.c_str()));
+            }
+            outputAngles.push_back(currentPoint);
         }
-        outputAngles.push_back(currentPoint);
+        f.close();
     }
-    f.close();*/
+    else
+    {
+        cerr << "Cannot open the file " << filename << endl;
+    }
     return outputAngles;
 }
 
@@ -218,9 +222,9 @@ void moveGripper() {
 }
 
 int main(int argc, char **argv) {
-    cout << "Loading values..." << endl;
-    cout << argv[1] << endl;
-    vector< vector<double> > values = loadAnglesValues(/*argv[1]*/);
+    cout << "Loading values from " << argv[1] << "..." << endl;
+    vector< vector<double> > values;
+    values = loadAnglesValues(argv[1]);
 
     ros::init(argc, argv, "object_displacer");
     ros::NodeHandle n;
@@ -234,7 +238,7 @@ int main(int argc, char **argv) {
     for (int i=0; i<values.size(); i++)
     {
         msg = createArmPositionCommand(values[i]);
-        for (int j=0; i<5; j++)
+        for (int j=0; j<5; j++)
         {
             cout << values[i][j] << "\t";
         }
