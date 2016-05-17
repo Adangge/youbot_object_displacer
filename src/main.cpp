@@ -245,7 +245,7 @@ int main(int argc, char **argv) {
         cout << endl;
         armPublisher.publish(msg);
 
-        ros::Duration(5).sleep();
+        ros::Duration(2).sleep();
     }
 
     //movePlatform();
