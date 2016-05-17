@@ -11,9 +11,12 @@
 #include <iostream>
 #include <fstream>
 
+#define OPENED_GRIPPER    0.011
+#define CLOSED_GRIPPER  0
+
 using namespace std;
 
-ros::Publisher platformPublisher;
+//ros::Publisher platformPublisher;
 ros::Publisher armPublisher;
 ros::Publisher gripperPublisher;
 
@@ -88,7 +91,7 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
 
 
 // move platform a little bit back- and forward and to the left and right
-void movePlatform() {
+/*void movePlatform() {
     geometry_msgs::Twist twist;
 
     // forward
@@ -115,10 +118,10 @@ void movePlatform() {
     // stop
     twist.linear.y = 0;
     platformPublisher.publish(twist);
-}
+}*/
 
 // move arm once up and down
-void moveArm() {
+/*void moveArm() {
     brics_actuator::JointPositions msg;
     vector<double> jointvalues(5);
 
@@ -204,53 +207,76 @@ void moveArm() {
     armPublisher.publish(msg);
 
     ros::Duration(2).sleep();
+}*/
+
+void initializeArm()
+{
+    brics_actuator::JointPositions msg;
+    vector<double> jointvalues(5);
+
+    jointvalues[0] = 0.012;
+    jointvalues[1] = 0.012;
+    jointvalues[2] = -0.158;
+    jointvalues[3] = 0.023;
+    jointvalues[4] = 0.111;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
 }
 
-// open and close gripper
-void moveGripper() {
+void moveGripper(double position)
+{
     brics_actuator::JointPositions msg;
-
-    // open gripper
-    msg = createGripperPositionCommand(0.011);
+    msg = createGripperPositionCommand(position);
     gripperPublisher.publish(msg);
 
     ros::Duration(3).sleep();
-
-    // close gripper
-    msg = createGripperPositionCommand(0);
-    gripperPublisher.publish(msg);
 }
 
 int main(int argc, char **argv) {
     cout << "Loading values from " << argv[1] << "..." << endl;
-    vector< vector<double> > values;
-    values = loadAnglesValues(argv[1]);
+    vector< vector<double> > values = loadAnglesValues(argv[1]);
+    cout << "Initialize..." << endl;
 
     ros::init(argc, argv, "object_displacer");
     ros::NodeHandle n;
 
-    platformPublisher = n.advertise<geometry_msgs::Twist>("cmd_vel", 1);
+    //platformPublisher = n.advertise<geometry_msgs::Twist>("cmd_vel", 1);
     armPublisher = n.advertise<brics_actuator::JointPositions>("arm_1/arm_controller/position_command", 1);
     gripperPublisher = n.advertise<brics_actuator::JointPositions>("arm_1/gripper_controller/position_command", 1);
     sleep(1);
 
+    moveGripper(CLOSED_GRIPPER);
+    initializeArm();
     brics_actuator::JointPositions msg;
-    for (int i=0; i<values.size(); i++)
+    cout << "Starting" << endl;
+    moveGripper(OPENED_GRIPPER);
+    msg = createArmPositionCommand(values[0]);
+    for (int j=0; j<5; j++)
+    {
+        cout << values[0][j] << "\t";
+    }
+    armPublisher.publish(msg);
+
+    ros::Duration(3).sleep();
+    moveGripper(CLOSED_GRIPPER);
+    for (int i=1; i<values.size(); i++)
     {
         msg = createArmPositionCommand(values[i]);
+        cout << "Point n°" << i << ":\t";
         for (int j=0; j<5; j++)
         {
             cout << values[i][j] << "\t";
         }
-        cout << endl;
         armPublisher.publish(msg);
 
         ros::Duration(2).sleep();
     }
+    moveGripper(OPENED_GRIPPER);
 
     //movePlatform();
     //moveArm();
-    //moveGripper();
 
     sleep(1);
     ros::shutdown();
