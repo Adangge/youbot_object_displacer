@@ -277,7 +277,7 @@ int main(int argc, char **argv) {
         cout << endl;
         armPublisher.publish(msg);
 
-        ros::Duration(2).sleep();
+        ros::Duration(1).sleep();
     }
     moveGripper(OPENED_GRIPPER);
 
