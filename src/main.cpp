@@ -11,6 +11,7 @@
 #include <iostream>
 #include <fstream>
 
+// Positions of the gripper
 #define OPENED_GRIPPER    0.011
 #define CLOSED_GRIPPER  0.0015
 
@@ -20,6 +21,9 @@ using namespace std;
 ros::Publisher armPublisher;
 ros::Publisher gripperPublisher;
 
+// Load angles from a file into a std::vector 2 dimensions
+// Each line is a 'frame' in the movement of the robot
+// Each value in the lines correspond to a specific joint angle
 vector< vector<double> > loadAnglesValues(char* filename) {
     vector< vector<double> > outputAngles;
     string value;
@@ -30,11 +34,13 @@ vector< vector<double> > loadAnglesValues(char* filename) {
         while (!f.eof())
         {
             vector<double> currentPoint;
+            // push back the 5 angles of the robot
             for (int i=0; i<5; i++)
             {
                 f >> value;
                 currentPoint.push_back(atof(value.c_str()));
             }
+            // push back the created robot position
             outputAngles.push_back(currentPoint);
         }
         f.close();
@@ -209,6 +215,7 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
     ros::Duration(2).sleep();
 }*/
 
+// Initialize the robot at a starting position (completely folded on itself)
 void initializeArm()
 {
     brics_actuator::JointPositions msg;
@@ -225,6 +232,7 @@ void initializeArm()
     ros::Duration(5).sleep();
 }
 
+// Move the gripper to a new position
 void moveGripper(double position)
 {
     brics_actuator::JointPositions msg;
@@ -236,9 +244,11 @@ void moveGripper(double position)
 
 int main(int argc, char **argv) {
     cout << "Loading values from " << argv[1] << "..." << endl;
+    // Load the requested action
     vector< vector<double> > values = loadAnglesValues(argv[1]);
     cout << "Initialize..." << endl;
 
+    // Initialize ros environement
     ros::init(argc, argv, "object_displacer");
     ros::NodeHandle n;
 
@@ -247,11 +257,14 @@ int main(int argc, char **argv) {
     gripperPublisher = n.advertise<brics_actuator::JointPositions>("arm_1/gripper_controller/position_command", 1);
     sleep(1);
 
+    // Initialize robot at constant starting position
     moveGripper(CLOSED_GRIPPER);
     initializeArm();
     brics_actuator::JointPositions msg;
     cout << "Starting" << endl;
+    // Open the gripper
     moveGripper(OPENED_GRIPPER);
+    // Achieve the 2 first positions
     for (int i=0; i<2; i++)
     {
         msg = createArmPositionCommand(values[i]);
@@ -265,7 +278,9 @@ int main(int argc, char **argv) {
 
         ros::Duration(2).sleep();
     }
+    // Close the gripper (taking the object)
     moveGripper(CLOSED_GRIPPER);
+    // Achieve the remaining positions in the list (move with the object)
     for (int i=2; i<values.size(); i++)
     {
         msg = createArmPositionCommand(values[i]);
@@ -279,12 +294,14 @@ int main(int argc, char **argv) {
 
         ros::Duration(1).sleep();
     }
+    // Open the gripper (release the object)
     moveGripper(OPENED_GRIPPER);
 
     //movePlatform();
     //moveArm();
 
     sleep(1);
+    // Close ros environement
     ros::shutdown();
 
     return 0;
