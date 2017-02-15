@@ -24,11 +24,11 @@ ros::Publisher gripperPublisher;
 // Load angles from a file into a std::vector 2 dimensions
 // Each line is a 'frame' in the movement of the robot
 // Each value in the lines correspond to a specific joint angle
-vector< vector<double> > loadAnglesValues(char* filename) {
+vector< vector<double> > loadAnglesValues(char* angles) {
     vector< vector<double> > outputAngles;
     string value;
     ifstream f;
-    f.open(filename);
+    f.open(angles);
     if (f.is_open())
     {
         while (!f.eof())
@@ -47,7 +47,7 @@ vector< vector<double> > loadAnglesValues(char* filename) {
     }
     else
     {
-        cerr << "Cannot open the file " << filename << endl;
+        cerr << "Cannot open the file " << angles << endl;
     }
     return outputAngles;
 }
