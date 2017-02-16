@@ -169,7 +169,7 @@ void moveArm() {
     jointvalues[1] = 1.846735 ;
     jointvalues[2] = -1.6580;
     jointvalues[3] = 3.02356;
-    jointvalues[4] = 0.111;
+    jointvalues[4] = 2.95;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
