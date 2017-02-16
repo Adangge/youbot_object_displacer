@@ -178,7 +178,7 @@ void moveArm() {
 }
 
 // close gripper
-void moveGripper() {
+void moveGripperclose() {
 	brics_actuator::JointPositions msg;
 
 	// close gripper
@@ -198,7 +198,7 @@ int main(int argc, char **argv) {
 	// movePlatform();
 	moveGripper();
 	moveArm();
-	moveGripper();
+	moveGripperclose();
 	// moveGripper();
 
 	sleep(1);
