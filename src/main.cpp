@@ -87,6 +87,17 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
 	platformPublisher.publish(twist);
 } */
 
+// open gripper
+void openGripper() {
+	brics_actuator::JointPositions msg;
+	
+	// open gripper
+	msg = createGripperPositionCommand(0.111);
+	gripperPublisher.publish(msg);
+
+	ros::Duration(3).sleep();
+}
+
 // move arm once up and down
 void moveArm() {
 	brics_actuator::JointPositions msg;
@@ -166,15 +177,9 @@ void moveArm() {
 
 }
 
-// open and close gripper
-void moveGripper() {
+// close gripper
+void closeGripper() {
 	brics_actuator::JointPositions msg;
-	
-	// open gripper
-	msg = createGripperPositionCommand(0.011);
-	gripperPublisher.publish(msg);
-
-	ros::Duration(3).sleep();
 
 	// close gripper
 	msg = createGripperPositionCommand(0);
@@ -191,8 +196,9 @@ int main(int argc, char **argv) {
 	sleep(1);
 
 	// movePlatform();
+	openGripper();
 	moveArm();
-	moveGripper();
+	closeGripper();
 
 	sleep(1);
 	ros::shutdown();
