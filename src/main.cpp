@@ -93,82 +93,82 @@ void moveArm() {
 	std::vector<double> jointvalues(5);
 
 	 // move arm straight up. values were determined empirically
-    jointvalues[0] = -13.147;
-    jointvalues[1] = 5.56874;
-    jointvalues[2] = 5.695891;
-    jointvalues[3] = -6.94531;
-    jointvalues[4] = 0;
+    jointvalues[0] = 5.147;
+    jointvalues[1] = 0.56874;
+    jointvalues[2] = -4.695891;
+    jointvalues[3] = 2.94531;
+    jointvalues[4] = 1.3333;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
     ros::Duration(5).sleep();
 
     // move arm back close to calibration position
-    jointvalues[0] = -12.94961;
-    jointvalues[1] = -5.0335571;
-    jointvalues[2] = 5.95143;
-    jointvalues[3] = -6.29855;
-    jointvalues[4] = 0;
+    jointvalues[0] = 4.5555;
+    jointvalues[1] = 2.4444;
+    jointvalues[2] = -4.95143;
+    jointvalues[3] = 2.29855;
+    jointvalues[4] = 0.21111;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
     ros::Duration(5).sleep();
 
-    jointvalues[0] = -12.16421;
-    jointvalues[1] = -6.37512 ;
-    jointvalues[2] = 5.528414;
-    jointvalues[3] = 5.166033;
-    jointvalues[4] = 0;
+    jointvalues[0] = 2.16421;
+    jointvalues[1] = 1.37512 ;
+    jointvalues[2] = -1.528414;
+    jointvalues[3] = 3.166033;
+    jointvalues[4] = 0.3222;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
     ros::Duration(5).sleep();
 
-    jointvalues[0] = -2.44251;
-    jointvalues[1] = -2.52041 ;
-    jointvalues[2] = 1.76995;
-    jointvalues[3] = -0.97741;
-    jointvalues[4] = 0;
+    jointvalues[0] = 2.44251;
+    jointvalues[1] = 2.52041 ;
+    jointvalues[2] = -1.76995;
+    jointvalues[3] = 0.97741;
+    jointvalues[4] = 3.666;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
     ros::Duration(5).sleep();
 
-    jointvalues[0] = -2.94961;
-    jointvalues[1] = -1.22819 ;
-    jointvalues[2] = 1.06134;
-    jointvalues[3] = -1.56102;
-    jointvalues[4] = 0;
+    jointvalues[0] = 2.94961;
+    jointvalues[1] = 1.22819 ;
+    jointvalues[2] = -1.06134;
+    jointvalues[3] = 1.56102;
+    jointvalues[4] = 4.555;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
     ros::Duration(5).sleep();
 
-    jointvalues[0] = -2.94961;
-    jointvalues[1] = -0.84809 ;
-    jointvalues[2] = 1.49785;
-    jointvalues[3] = -2.34624;
-    jointvalues[4] = 0;
+    jointvalues[0] = 2.94961;
+    jointvalues[1] = 0.84809 ;
+    jointvalues[2] = -1.49785;
+    jointvalues[3] = 2.34624;
+    jointvalues[4] = 2.333;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
     ros::Duration(5).sleep();
 
-    jointvalues[0] = -2.94961;
-    jointvalues[1] = -0.846735 ;
-    jointvalues[2] = 2.17819;
-    jointvalues[3] = -3.02793;
-    jointvalues[4] = 0;
+    jointvalues[0] = 4.94961;
+    jointvalues[1] = 1.846735 ;
+    jointvalues[2] = -2.17819;
+    jointvalues[3] = 3.02793;
+    jointvalues[4] = 0.67777;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
     ros::Duration(5).sleep();
 
-    jointvalues[0] = -3.89309;
-    jointvalues[1] = -1.27728 ;
-    jointvalues[2] = 1.8776;
-    jointvalues[3] = -2.2968;
-    jointvalues[4] = 0;
+    jointvalues[0] = 3.89309;
+    jointvalues[1] = 1.27728 ;
+    jointvalues[2] = -1.8776;
+    jointvalues[3] = 2.2968;
+    jointvalues[4] = 0.2333;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
