@@ -1,3 +1,4 @@
+
 //
 // Simple demo program that calls the youBot ROS wrapper
 //
@@ -8,131 +9,90 @@
 #include "brics_actuator/JointPositions.h"
 #include "geometry_msgs/Twist.h"
 
-#include <iostream>
-#include <fstream>
-
-// Positions of the gripper
-#define OPENED_GRIPPER    0.011
-#define CLOSED_GRIPPER  0.0015
-
-/* using namespace std;
-
-//ros::Publisher platformPublisher;
+ros::Publisher platformPublisher;
 ros::Publisher armPublisher;
 ros::Publisher gripperPublisher;
 
-// Load angles from a file into a std::vector 2 dimensions
-// Each line is a 'frame' in the movement of the robot
-// Each value in the lines correspond to a specific joint angle
-vector< vector<double> > loadAnglesValues(char* angles) {
-    vector< vector<double> > outputAngles;
-    string value;
-    ifstream f;
-    f.open(angles);
-    if (f.is_open())
-    {
-        while (!f.eof())
-        {
-            vector<double> currentPoint;
-            // push back the 5 angles of the robot
-            for (int i=0; i<5; i++)
-            {
-                f >> value;
-                currentPoint.push_back(atof(value.c_str()));
-            }
-            // push back the created robot position
-            outputAngles.push_back(currentPoint);
-        }
-        f.close();
-    }
-    else
-    {
-        cerr << "Cannot open the file " << angles << endl;
-    }
-    return outputAngles;
-} */
-
 // create a brics actuator message with the given joint position values
-brics_actuator::JointPositions createArmPositionCommand(vector<double>& newPositions) {
-    int numberOfJoints = 5;
-    brics_actuator::JointPositions msg;
+brics_actuator::JointPositions createArmPositionCommand(std::vector<double>& newPositions) {
+	int numberOfJoints = 5;
+	brics_actuator::JointPositions msg;
 
-    if (newPositions.size() < numberOfJoints)
-        return msg; // return empty message if not enough values provided
+	if (newPositions.size() < numberOfJoints)
+		return msg; // return empty message if not enough values provided
 
-    for (int i = 0; i < numberOfJoints; i++) {
-        // Set all values for one joint, i.e. time, name, value and unit
-        brics_actuator::JointValue joint;
-        joint.timeStamp = ros::Time::now();
-        joint.value = newPositions[i];
-        joint.unit = boost::units::to_string(boost::units::si::radian);
+	for (int i = 0; i < numberOfJoints; i++) {
+		// Set all values for one joint, i.e. time, name, value and unit
+		brics_actuator::JointValue joint;
+		joint.timeStamp = ros::Time::now();
+		joint.value = newPositions[i];
+		joint.unit = boost::units::to_string(boost::units::si::radian);
 
-        // create joint names: "arm_joint_1" to "arm_joint_5" (for 5 DoF)
-        stringstream jointName;
-        jointName << "arm_joint_" << (i + 1);
-        joint.joint_uri = jointName.str();
+		// create joint names: "arm_joint_1" to "arm_joint_5" (for 5 DoF)
+		std::stringstream jointName;
+		jointName << "arm_joint_" << (i + 1);
+		joint.joint_uri = jointName.str();
 
-        // add joint to message
-        msg.positions.push_back(joint);
-    }
+		// add joint to message
+		msg.positions.push_back(joint);
+	}
 
-    return msg;
+	return msg;
 }
 
 // create a brics actuator message for the gripper using the same position for both fingers
 brics_actuator::JointPositions createGripperPositionCommand(double newPosition) {
-    brics_actuator::JointPositions msg;
+	brics_actuator::JointPositions msg;
 
-    brics_actuator::JointValue joint;
-    joint.timeStamp = ros::Time::now();
-    joint.unit = boost::units::to_string(boost::units::si::meter); // = "m"
-    joint.value = newPosition;
-    joint.joint_uri = "gripper_finger_joint_l";
-    msg.positions.push_back(joint);
-    joint.joint_uri = "gripper_finger_joint_r";
-    msg.positions.push_back(joint);
+	brics_actuator::JointValue joint;
+	joint.timeStamp = ros::Time::now();
+	joint.unit = boost::units::to_string(boost::units::si::meter); // = "m"
+	joint.value = newPosition;
+	joint.joint_uri = "gripper_finger_joint_l";
+	msg.positions.push_back(joint);		
+	joint.joint_uri = "gripper_finger_joint_r";
+	msg.positions.push_back(joint);		
 
-    return msg;
+	return msg;
 }
 
 
 // move platform a little bit back- and forward and to the left and right
 void movePlatform() {
-    geometry_msgs::Twist twist;
+	geometry_msgs::Twist twist;
 
-    // forward
-    twist.linear.x = 0.05;  // with 0.05 m per sec
-    platformPublisher.publish(twist);
-    ros::Duration(2).sleep();
+	// forward
+	twist.linear.x = 0.05;  // with 0.05 m per sec
+	platformPublisher.publish(twist);
+	ros::Duration(2).sleep();
 
-    // backward
-    twist.linear.x = -0.05;
-    platformPublisher.publish(twist);
-    ros::Duration(2).sleep();
+	// backward
+	twist.linear.x = -0.05;
+	platformPublisher.publish(twist);
+	ros::Duration(2).sleep();
 
-    // to the left
-    twist.linear.x = 0;
-    twist.linear.y = 0.05;
-    platformPublisher.publish(twist);
-    ros::Duration(2).sleep();
+	// to the left
+	twist.linear.x = 0;
+	twist.linear.y = 0.05;
+	platformPublisher.publish(twist);
+	ros::Duration(2).sleep();
 
-    // to the right
-    twist.linear.y = -0.05;
-    platformPublisher.publish(twist);
-    ros::Duration(2).sleep();
+	// to the right
+	twist.linear.y = -0.05;
+	platformPublisher.publish(twist);
+	ros::Duration(10).sleep();
 
-    // stop
-    twist.linear.y = 0;
-    platformPublisher.publish(twist);
+	// stop
+	twist.linear.y = 0;
+	platformPublisher.publish(twist);
 }
 
 // move arm once up and down
 void moveArm() {
-    brics_actuator::JointPositions msg;
-    vector<double> jointvalues(5);
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
 
-
-    // move arm straight up. values were determined empirically
+	 // move arm straight up. values were determined empirically
     jointvalues[0] = -3.147;
     jointvalues[1] = 0.56874;
     jointvalues[2] = 0.695891;
@@ -213,96 +173,39 @@ void moveArm() {
     armPublisher.publish(msg);
 
     ros::Duration(2).sleep();
+
 }
 
-// Initialize the robot at a starting position (completely folded on itself)
-void initializeArm()
-{
-    brics_actuator::JointPositions msg;
-    vector<double> jointvalues(5);
+// open and close gripper
+void moveGripper() {
+	brics_actuator::JointPositions msg;
+	
+	// open gripper
+	msg = createGripperPositionCommand(0.011);
+	gripperPublisher.publish(msg);
 
-    jointvalues[0] = 0.012;
-    jointvalues[1] = 0.012;
-    jointvalues[2] = -0.158;
-    jointvalues[3] = 0.023;
-    jointvalues[4] = 0.111;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
+	ros::Duration(3).sleep();
 
-    ros::Duration(5).sleep();
-}
-
-// Move the gripper to a new position
-void moveGripper(double position)
-{
-    brics_actuator::JointPositions msg;
-    msg = createGripperPositionCommand(position);
-    gripperPublisher.publish(msg);
-
-    ros::Duration(3).sleep();
+	// close gripper
+	msg = createGripperPositionCommand(0);
+	gripperPublisher.publish(msg);
 }
 
 int main(int argc, char **argv) {
-    cout << "Loading values from " << argv[1] << "..." << endl;
-    // Load the requested action
-    vector< vector<double> > values = loadAnglesValues(argv[1]);
-    cout << "Initialize..." << endl;
+	ros::init(argc, argv, "youbot_ros_hello_world");
+	ros::NodeHandle n;
 
-    // Initialize ros environement
-    ros::init(argc, argv, "object_displacer");
-    ros::NodeHandle n;
+	platformPublisher = n.advertise<geometry_msgs::Twist>("cmd_vel", 1);
+	armPublisher = n.advertise<brics_actuator::JointPositions>("arm_1/arm_controller/position_command", 1);
+	gripperPublisher = n.advertise<brics_actuator::JointPositions>("arm_1/gripper_controller/position_command", 1);
+	sleep(1);
 
-    //platformPublisher = n.advertise<geometry_msgs::Twist>("cmd_vel", 1);
-    armPublisher = n.advertise<brics_actuator::JointPositions>("arm_1/arm_controller/position_command", 1);
-    gripperPublisher = n.advertise<brics_actuator::JointPositions>("arm_1/gripper_controller/position_command", 1);
-    sleep(1);
+	movePlatform();
+	moveArm();
+	moveGripper();
 
-    // Initialize robot at constant starting position
-    moveGripper(CLOSED_GRIPPER);
-    initializeArm();
-    brics_actuator::JointPositions msg;
-    cout << "Starting" << endl;
-    // Open the gripper
-    moveGripper(OPENED_GRIPPER);
-    // Achieve the 2 first positions
-    for (int i=0; i<2; i++)
-    {
-        msg = createArmPositionCommand(values[i]);
-        cout << "Point n°" << i << ":\t";
-        for (int j=0; j<5; j++)
-        {
-            cout << values[0][j] << "\t";
-        }
-        cout << endl;
-        armPublisher.publish(msg);
+	sleep(1);
+	ros::shutdown();
 
-        ros::Duration(2).sleep();
-    }
-    // Close the gripper (taking the object)
-    moveGripper(CLOSED_GRIPPER);
-    // Achieve the remaining positions in the list (move with the object)
-    for (int i=2; i<values.size(); i++)
-    {
-        msg = createArmPositionCommand(values[i]);
-        cout << "Point n°" << i << ":\t";
-        for (int j=0; j<5; j++)
-        {
-            cout << values[i][j] << "\t";
-        }
-        cout << endl;
-        armPublisher.publish(msg);
-
-        ros::Duration(1).sleep();
-    }
-    // Open the gripper (release the object)
-    moveGripper(OPENED_GRIPPER);
-
-    //movePlatform();
-    //moveArm();
-
-    sleep(1);
-    // Close ros environement
-    ros::shutdown();
-
-    return 0;
+	return 0;
 }
