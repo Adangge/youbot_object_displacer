@@ -93,7 +93,7 @@ void moveArm() {
 	std::vector<double> jointvalues(5);
 
 	 // move arm straight up. values were determined empirically
-    jointvalues[0] = 2.95;
+    jointvalues[0] = 5.84014;
     jointvalues[1] = 1.05;
     jointvalues[2] = -2.44;
     jointvalues[3] = 1.73;
