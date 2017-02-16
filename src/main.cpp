@@ -1,7 +1,8 @@
 
 //
-// Simple demo program that calls the youBot ROS wrapper
-//
+// Devlopment Hello world code 
+//16.02.17
+//yazeed al-smadi
 
 #include "ros/ros.h"
 #include "boost/units/systems/si.hpp"
@@ -80,7 +81,7 @@ void movePlatform() {
 	// to the right
 	twist.linear.y = -0.05;
 	platformPublisher.publish(twist);
-	ros::Duration(10).sleep();
+	ros::Duration(2).sleep();
 
 	// stop
 	twist.linear.y = 0;
@@ -92,87 +93,111 @@ void moveArm() {
 	brics_actuator::JointPositions msg;
 	std::vector<double> jointvalues(5);
 
-	 // move arm straight up. values were determined empirically
-    jointvalues[0] = -3.147;
-    jointvalues[1] = 0.56874;
-    jointvalues[2] = 0.695891;
-    jointvalues[3] = -1.94531;
-    jointvalues[4] = 0;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
+	// move arm straight up. values were determined empirically
+	jointvalues[0] = 2.95;
+	jointvalues[1] = 1.05;
+	jointvalues[2] = -2.44;
+	jointvalues[3] = 1.73;
+	jointvalues[4] = 2.95;
+	msg = createArmPositionCommand(jointvalues);
+	armPublisher.publish(msg);
+//left
+jointvalues[0] = 5.90;
+	jointvalues[1] = 2.10;
+	jointvalues[2] = -4.88;
+	jointvalues[3] = 3.73;
+	jointvalues[4] = 5.90;
+	msg = createArmPositionCommand(jointvalues);
+	armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+//down
+jointvalues[0] = 4.95;
+	jointvalues[1] = 2.05;
+	jointvalues[2] = -4.44;
+	jointvalues[3] = 2.73;
+	jointvalues[4] = 3.95;
+	msg = createArmPositionCommand(jointvalues);
+	armPublisher.publish(msg);
 
-    // move arm back close to calibration position
-    jointvalues[0] = -2.94961;
-    jointvalues[1] = -0.0335571;
-    jointvalues[2] = 0.65143;
-    jointvalues[3] = -1.29855;
-    jointvalues[4] = 0;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
+void moveGripper() {
+	brics_actuator::JointPositions msg;
+	
+	// open gripper
+	msg = createGripperPositionCommand(0.011);
+	gripperPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+	ros::Duration(3).sleep();
 
-    jointvalues[0] = -2.16421;
-    jointvalues[1] = -1.37512 ;
-    jointvalues[2] = 0.528414;
-    jointvalues[3] = 0.166033;
-    jointvalues[4] = 0;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
+	// close gripper
+	msg = createGripperPositionCommand(0);
+	gripperPublisher.publish(msg);
+}
 
-    ros::Duration(5).sleep();
 
-    jointvalues[0] = -2.44251;
-    jointvalues[1] = -2.52041 ;
-    jointvalues[2] = 1.76995;
-    jointvalues[3] = -0.97741;
-    jointvalues[4] = 0;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
+//up
+jointvalues[0] = 5.95;
+	jointvalues[1] = 2.05;
+	jointvalues[2] = -1.44;
+	jointvalues[3] = 3.73;
+	jointvalues[4] = 4.95;
+	msg = createArmPositionCommand(jointvalues);
+	armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
 
-    jointvalues[0] = -2.94961;
-    jointvalues[1] = -1.22819 ;
-    jointvalues[2] = 1.06134;
-    jointvalues[3] = -1.56102;
-    jointvalues[4] = 0;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
 
-    jointvalues[0] = -2.94961;
-    jointvalues[1] = -0.84809 ;
-    jointvalues[2] = 1.49785;
-    jointvalues[3] = -2.34624;
-    jointvalues[4] = 0;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
 
-    jointvalues[0] = -2.94961;
-    jointvalues[1] = -0.846735 ;
-    jointvalues[2] = 2.17819;
-    jointvalues[3] = -3.02793;
-    jointvalues[4] = 0;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
+	ros::Duration(5).sleep();
+//right
+	// move arm back close to calibration position
+	jointvalues[0] = 2.11;
+	jointvalues[1] = 1.11;
+	jointvalues[2] = -2.11;
+	jointvalues[3] = 3.11;
+	jointvalues[4] = 3.111;
+	msg = createArmPositionCommand(jointvalues);
+	armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+	ros::Duration(2).sleep();
+//down
+	// move arm back close to calibration position
+	jointvalues[0] = 0.11;
+	jointvalues[1] = 0.11;
+	jointvalues[2] = -0.11;
+	jointvalues[3] = 0.11;
+	jointvalues[4] = 0.111;
+	msg = createArmPositionCommand(jointvalues);
+	armPublisher.publish(msg);
 
-    jointvalues[0] = -3.89309;
-    jointvalues[1] = -1.27728 ;
-    jointvalues[2] = 1.8776;
-    jointvalues[3] = -2.2968;
-    jointvalues[4] = 0;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+void moveGripper() {
+	brics_actuator::JointPositions msg;
+	
+	// open gripper
+	msg = createGripperPositionCommand(0.011);
+	gripperPublisher.publish(msg);
+
+	ros::Duration(3).sleep();
+
+	// close gripper
+	msg = createGripperPositionCommand(0);
+	gripperPublisher.publish(msg);
+}
+
+	ros::Duration(2).sleep();
+
+\\up
+	// move arm back close to calibration position
+	jointvalues[0] = 0.11;
+	jointvalues[1] = 0.11;
+	jointvalues[2] = -0.11;
+	jointvalues[3] = 0.11;
+	jointvalues[4] = 0.111;
+	msg = createArmPositionCommand(jointvalues);
+	armPublisher.publish(msg);
+
+	ros::Duration(2).sleep();
 
 }
 
