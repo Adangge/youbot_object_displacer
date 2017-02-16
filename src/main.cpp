@@ -177,14 +177,14 @@ void moveArm() {
 
 }
 
-// close gripper
+/* // close gripper
 void moveGripper() {
 	brics_actuator::JointPositions msg;
 
 	// close gripper
 	msg = createGripperPositionCommand(0);
 	gripperPublisher.publish(msg);
-}
+} */
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "youbot_ros_hello_world");
@@ -198,7 +198,7 @@ int main(int argc, char **argv) {
 	// movePlatform();
 	moveGripper();
 	moveArm();
-	moveGripper();
+	// moveGripper();
 
 	sleep(1);
 	ros::shutdown();
