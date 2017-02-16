@@ -58,7 +58,7 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
 
 
 // move platform a little bit back- and forward and to the left and right
-void movePlatform() {
+/* void movePlatform() {
 	geometry_msgs::Twist twist;
 
 	// forward
@@ -85,7 +85,7 @@ void movePlatform() {
 	// stop
 	twist.linear.y = 0;
 	platformPublisher.publish(twist);
-}
+} */
 
 // move arm once up and down
 void moveArm() {
@@ -156,8 +156,8 @@ void moveArm() {
 
     jointvalues[0] = 5.84014;
     jointvalues[1] = 1.846735 ;
-    jointvalues[2] = -2.17819;
-    jointvalues[3] = 3.02793;
+    jointvalues[2] = -4.0500;
+    jointvalues[3] = 3.4292;
     jointvalues[4] = 0.67777;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
@@ -200,7 +200,7 @@ int main(int argc, char **argv) {
 	gripperPublisher = n.advertise<brics_actuator::JointPositions>("arm_1/gripper_controller/position_command", 1);
 	sleep(1);
 
-	movePlatform();
+	// movePlatform();
 	moveArm();
 	moveGripper();
 
