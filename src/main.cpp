@@ -1,4 +1,3 @@
-
 //
 // Simple demo program that calls the youBot ROS wrapper
 //
@@ -87,8 +86,25 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
 	platformPublisher.publish(twist);
 } */
 
+// start position
+void moveArmstart() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 5.84014;
+    jointvalues[1] = 1.846735;
+    jointvalues[2] = -1.8950;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+	
+}
+	
 // open gripper
-void moveGripper() {
+void moveGripperopen() {
 	brics_actuator::JointPositions msg;
 	
 	// open gripper
@@ -98,74 +114,71 @@ void moveGripper() {
 	ros::Duration(3).sleep();
 }
 
-// move arm once up and down
-void moveArm() {
+// move close to the cube
+void moveArmcloseto() {
 	brics_actuator::JointPositions msg;
 	std::vector<double> jointvalues(5);
-
-	 // move arm straight up. values were determined empirically
-    jointvalues[0] = 5.84014;
-    jointvalues[1] = 1.05;
-    jointvalues[2] = -2.44;
-    jointvalues[3] = 1.73;
+	 
+	jointvalues[0] = 5.84014;
+    jointvalues[1] = 1.846735 ;
+    jointvalues[2] = -1.6580;
+    jointvalues[3] = 3.02356;
     jointvalues[4] = 2.95;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
     ros::Duration(5).sleep();
+}
 
-   /* // move arm back close to calibration position
-    jointvalues[0] = 4.5555;
-    jointvalues[1] = 2.4444;
-    jointvalues[2] = -4.95143;
-    jointvalues[3] = 2.29855;
-    jointvalues[4] = 0.21111;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
+// close gripper
+void moveGripperclose() {
+	brics_actuator::JointPositions msg;
+	
+	msg = createGripperPositionCommand(0);
+	gripperPublisher.publish(msg);
+}
 
-    ros::Duration(5).sleep();
-
-    jointvalues[0] = 2.16421;
-    jointvalues[1] = 1.37512 ;
-    jointvalues[2] = -1.528414;
-    jointvalues[3] = 3.166033;
-    jointvalues[4] = 0.3222;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
-
-    ros::Duration(5).sleep();
-
-    jointvalues[0] = 2.44251;
-    jointvalues[1] = 2.52041 ;
-    jointvalues[2] = -1.76995;
-    jointvalues[3] = 0.97741;
-    jointvalues[4] = 3.666;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
-
-    ros::Duration(5).sleep();
-
-    jointvalues[0] = 2.94961;
-    jointvalues[1] = 1.22819 ;
-    jointvalues[2] = -1.06134;
-    jointvalues[3] = 1.56102;
-    jointvalues[4] = 4.555;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
-
-    ros::Duration(5).sleep();
-
-    jointvalues[0] = 2.94961;
-    jointvalues[1] = 0.84809 ;
-    jointvalues[2] = -1.49785;
-    jointvalues[3] = 2.34624;
-    jointvalues[4] = 2.333;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
-
-    ros::Duration(5).sleep(); */
-
+// move arm back to the Ausgangsposition
+void moveArmback() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
     jointvalues[0] = 5.84014;
+    jointvalues[1] = 1.846735;
+    jointvalues[2] = -1.8950;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+	
+}
+
+// move arm to right
+
+void moveArmright() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 0.2111;
+    jointvalues[1] = 1.846735;
+    jointvalues[2] = -1.8950;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+	
+}
+
+// put down the cube
+void moveArmdown() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	 
+	jointvalues[0] = 0.2111;
     jointvalues[1] = 1.846735 ;
     jointvalues[2] = -1.6580;
     jointvalues[3] = 3.02356;
@@ -177,13 +190,32 @@ void moveArm() {
 
 }
 
-// close gripper
-void moveGripperclose() {
-	brics_actuator::JointPositions msg;
+// open the gripper
 
-	// close gripper
-	msg = createGripperPositionCommand(0);
+void moveGripperopenagain() {
+	brics_actuator::JointPositions msg;
+	
+	msg = createGripperPositionCommand(0.0115);
 	gripperPublisher.publish(msg);
+
+	ros::Duration(3).sleep();
+}
+
+// move the arm back 
+void moveArmup() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 0.2111;
+    jointvalues[1] = 1.846735;
+    jointvalues[2] = -1.8950;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+	
 }
 
 int main(int argc, char **argv) {
@@ -196,14 +228,20 @@ int main(int argc, char **argv) {
 	sleep(1);
 
 	// movePlatform();
-	moveGripper();
-	moveArm();
+	moveArmstart();
+	moveGripperopen();
+	moveArmcloseto();
 	moveGripperclose();
-	// moveGripper();
+	moveArmback();
+	moveArmright();
+	moveArmdown();
+	moveGripperopenagain();
+	moveArmup();
 
 	sleep(1);
 	ros::shutdown();
 
 	return 0;
+	
 }
 
