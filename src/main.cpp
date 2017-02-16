@@ -97,7 +97,7 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
 
 
 // move platform a little bit back- and forward and to the left and right
-/*void movePlatform() {
+void movePlatform() {
     geometry_msgs::Twist twist;
 
     // forward
@@ -124,10 +124,10 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
     // stop
     twist.linear.y = 0;
     platformPublisher.publish(twist);
-}*/
+}
 
 // move arm once up and down
-/*void moveArm() {
+void moveArm() {
     brics_actuator::JointPositions msg;
     vector<double> jointvalues(5);
 
@@ -213,7 +213,7 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
     armPublisher.publish(msg);
 
     ros::Duration(2).sleep();
-}*/
+}
 
 // Initialize the robot at a starting position (completely folded on itself)
 void initializeArm()
