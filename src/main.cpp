@@ -103,7 +103,7 @@ void moveArm() {
 
     ros::Duration(5).sleep();
 
-    // move arm back close to calibration position
+   /* // move arm back close to calibration position
     jointvalues[0] = 4.5555;
     jointvalues[1] = 2.4444;
     jointvalues[2] = -4.95143;
@@ -152,27 +152,17 @@ void moveArm() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+    ros::Duration(5).sleep(); */
 
     jointvalues[0] = 5.84014;
     jointvalues[1] = 1.846735 ;
-    jointvalues[2] = -4.0500;
+    jointvalues[2] = -0.015708;
     jointvalues[3] = 3.4292;
     jointvalues[4] = 0.67777;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
     ros::Duration(5).sleep();
-
-    jointvalues[0] = 3.89309;
-    jointvalues[1] = 1.27728 ;
-    jointvalues[2] = -1.8776;
-    jointvalues[3] = 2.2968;
-    jointvalues[4] = 0.2333;
-    msg = createArmPositionCommand(jointvalues);
-    armPublisher.publish(msg);
-
-    ros::Duration(2).sleep();
 
 }
 
