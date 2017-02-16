@@ -93,11 +93,11 @@ void moveArm() {
 	std::vector<double> jointvalues(5);
 
 	 // move arm straight up. values were determined empirically
-    jointvalues[0] = 5.147;
-    jointvalues[1] = 0.56874;
-    jointvalues[2] = -4.695891;
-    jointvalues[3] = 2.94531;
-    jointvalues[4] = 1.3333;
+    jointvalues[0] = 2.95;
+    jointvalues[1] = 1.05;
+    jointvalues[2] = -2.44;
+    jointvalues[3] = 1.73;
+    jointvalues[4] = 2.95;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
@@ -156,7 +156,7 @@ void moveArm() {
 
     jointvalues[0] = 5.84014;
     jointvalues[1] = 1.846735 ;
-    jointvalues[2] = -1.7680;
+    jointvalues[2] = -1.6580;
     jointvalues[3] = 3.02356;
     jointvalues[4] = 0.111;
     msg = createArmPositionCommand(jointvalues);
