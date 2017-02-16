@@ -92,7 +92,7 @@ void moveGripper() {
 	brics_actuator::JointPositions msg;
 	
 	// open gripper
-	msg = createGripperPositionCommand(0.111);
+	msg = createGripperPositionCommand(0.0115);
 	gripperPublisher.publish(msg);
 
 	ros::Duration(3).sleep();
