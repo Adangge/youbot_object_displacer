@@ -88,7 +88,7 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
 } */
 
 // open gripper
-void openGripper() {
+void moveGripperopen() {
 	brics_actuator::JointPositions msg;
 	
 	// open gripper
@@ -178,7 +178,7 @@ void moveArm() {
 }
 
 // close gripper
-void closeGripper() {
+void moveGripperclose() {
 	brics_actuator::JointPositions msg;
 
 	// close gripper
@@ -196,9 +196,9 @@ int main(int argc, char **argv) {
 	sleep(1);
 
 	// movePlatform();
-	openGripper();
+	moveGripperopen();
 	moveArm();
-	closeGripper();
+	moveGripperclose();
 
 	sleep(1);
 	ros::shutdown();
