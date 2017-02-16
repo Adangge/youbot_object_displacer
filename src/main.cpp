@@ -154,7 +154,7 @@ void moveArm() {
 
     ros::Duration(5).sleep();
 
-    jointvalues[0] = 4.94961;
+    jointvalues[0] = 5.84014;
     jointvalues[1] = 1.846735 ;
     jointvalues[2] = -2.17819;
     jointvalues[3] = 3.02793;
