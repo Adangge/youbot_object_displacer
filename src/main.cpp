@@ -15,7 +15,7 @@
 #define OPENED_GRIPPER    0.011
 #define CLOSED_GRIPPER  0.0015
 
-using namespace std;
+/* using namespace std;
 
 //ros::Publisher platformPublisher;
 ros::Publisher armPublisher;
@@ -50,7 +50,7 @@ vector< vector<double> > loadAnglesValues(char* angles) {
         cerr << "Cannot open the file " << angles << endl;
     }
     return outputAngles;
-}
+} */
 
 // create a brics actuator message with the given joint position values
 brics_actuator::JointPositions createArmPositionCommand(vector<double>& newPositions) {
