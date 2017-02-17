@@ -178,7 +178,7 @@ void moveArmright() {
 	brics_actuator::JointPositions msg;
 	std::vector<double> jointvalues(5);
 	
-    jointvalues[0] = 0.7111;
+    jointvalues[0] = 0.1511;
     jointvalues[1] = 0.11;
     jointvalues[2] = -0.11;
     jointvalues[3] = 0.11;
@@ -195,7 +195,7 @@ void moveArmunfold() {
 	brics_actuator::JointPositions msg;
 	std::vector<double> jointvalues(5);
 	
-    jointvalues[0] = 0.7111;
+    jointvalues[0] = 0.1511;
     jointvalues[1] = 1.846735;
     jointvalues[2] = -1.8950;
     jointvalues[3] = 3.02356;
