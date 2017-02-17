@@ -99,7 +99,7 @@ void moveArmstart() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(5).sleep();
 	
 }
 	
@@ -111,7 +111,7 @@ void moveGripperopen() {
 	msg = createGripperPositionCommand(0.0115);
 	gripperPublisher.publish(msg);
 
-	ros::Duration(3).sleep();
+	ros::Duration(5).sleep();
 }
 
 // move close to the cube
@@ -127,7 +127,7 @@ void moveArmcloseto() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(5).sleep();
 }
 
 // close gripper
@@ -152,7 +152,7 @@ void moveArmback() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(5).sleep();
 	
 }
 
@@ -170,7 +170,7 @@ void moveArmright() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(5).sleep();
 	
 }
 
@@ -187,7 +187,7 @@ void moveArmdown() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(5).sleep();
 
 }
 
@@ -199,7 +199,7 @@ void moveGripperopenagain() {
 	msg = createGripperPositionCommand(0.0115);
 	gripperPublisher.publish(msg);
 
-	ros::Duration(3).sleep();
+	ros::Duration(5).sleep();
 }
 
 // move the arm back 
@@ -215,9 +215,114 @@ void moveArmup() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(5).sleep();
 	
 }
+
+// move arm close to cube again
+void moveArmclosetoagain() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	 
+	jointvalues[0] = 0.1511;
+    jointvalues[1] = 1.846735 ;
+    jointvalues[2] = -1.6580;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+
+}
+
+// close the gripper
+void moveGrippercloseagain() {
+	brics_actuator::JointPositions msg;
+	
+	msg = createGripperPositionCommand(0);
+	gripperPublisher.publish(msg);
+	ros::Duration(5).sleep();
+}
+
+// move arm up again
+void moveArmupagain() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 0.1511;
+    jointvalues[1] = 1.846735;
+    jointvalues[2] = -1.8950;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+	
+}
+
+//move arm to left
+void moveArmleft() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 5.84014;
+    jointvalues[1] = 1.846735;
+    jointvalues[2] = -1.8950;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+	
+}
+
+// put down the cube
+
+void moveArmdownagain() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	 
+    jointvalues[0] = 5.84014;
+    jointvalues[1] = 1.846735 ;
+    jointvalues[2] = -1.6580;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+}
+
+// open the gripper
+void moveGripperopenagainagain() {
+	brics_actuator::JointPositions msg;
+	
+	msg = createGripperPositionCommand(0.0115);
+	gripperPublisher.publish(msg);
+
+	ros::Duration(5).sleep();
+}
+
+// move arm up again
+void moveArmbackagain() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 5.84014;
+    jointvalues[1] = 1.846735;
+    jointvalues[2] = -1.8950;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+	
+}
+
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "youbot_ros_hello_world");
@@ -238,6 +343,13 @@ int main(int argc, char **argv) {
 	moveArmdown();
 	moveGripperopenagain();
 	moveArmup();
+	moveArmclosetoagain();
+	moveGrippercloseagain();
+	moveArmupagain();
+	moveArmleft();
+	moveArmdownagain();
+	moveGripperopenagainagain();
+	moveArmbackagain();
 
 	sleep(1);
 	ros::shutdown();
