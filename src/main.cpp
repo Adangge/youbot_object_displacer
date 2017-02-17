@@ -136,7 +136,7 @@ void moveGripperclose() {
 	
 	msg = createGripperPositionCommand(0);
 	gripperPublisher.publish(msg);
-	ros::Duration(5).sleep();
+	ros::Duration(3).sleep();
 }
 
 // move arm back to the Ausgangsposition
@@ -187,7 +187,7 @@ void moveArmdown() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(2).sleep();
 
 }
 
@@ -232,7 +232,7 @@ void moveArmclosetoagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+    ros::Duration(3).sleep();
 
 }
 
