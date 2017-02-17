@@ -220,7 +220,7 @@ void moveArmdown() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+    ros::Duration(2).sleep();
 
 }
 
