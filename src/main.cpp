@@ -162,7 +162,7 @@ void moveArmright() {
 	brics_actuator::JointPositions msg;
 	std::vector<double> jointvalues(5);
 	
-    jointvalues[0] = 0.7111;
+    jointvalues[0] = 0.1511;
     jointvalues[1] = 1.846735;
     jointvalues[2] = -1.8950;
     jointvalues[3] = 3.02356;
@@ -179,7 +179,7 @@ void moveArmdown() {
 	brics_actuator::JointPositions msg;
 	std::vector<double> jointvalues(5);
 	 
-	jointvalues[0] = 0.7111;
+	jointvalues[0] = 0.1511;
     jointvalues[1] = 1.846735 ;
     jointvalues[2] = -1.6580;
     jointvalues[3] = 3.02356;
@@ -207,7 +207,7 @@ void moveArmup() {
 	brics_actuator::JointPositions msg;
 	std::vector<double> jointvalues(5);
 	
-    jointvalues[0] = 0.7111;
+    jointvalues[0] = 0.1511;
     jointvalues[1] = 1.846735;
     jointvalues[2] = -1.8950;
     jointvalues[3] = 3.02356;
