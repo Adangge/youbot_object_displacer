@@ -156,7 +156,74 @@ void moveArmback() {
 	
 }
 
-// move arm to right
+// move arm straight
+void moveArmfold() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 5.84014;
+    jointvalues[1] = 0.11;
+    jointvalues[2] = -0.11;
+    jointvalues[3] = 0.11;
+    jointvalues[4] = 0.11;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+	
+}
+
+// move arm right
+void moveArmright() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 0.7111;
+    jointvalues[1] = 0.11;
+    jointvalues[2] = -0.11;
+    jointvalues[3] = 0.11;
+    jointvalues[4] = 0.11;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+	
+}
+
+// move arm unfold
+void moveArmunfold() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 0.7111;
+    jointvalues[1] = 1.846735;
+    jointvalues[2] = -1.8950;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+	
+}
+
+// put down the cube
+void moveArmdown() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	 
+	jointvalues[0] = 0.1511;
+    jointvalues[1] = 1.846735 ;
+    jointvalues[2] = -1.6580;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(5).sleep();
+
+}
+/* // move arm to right
 
 void moveArmright() {
 	brics_actuator::JointPositions msg;
@@ -321,7 +388,7 @@ void moveArmbackagain() {
 
     ros::Duration(1).sleep();
 	
-}
+} */
 
 
 int main(int argc, char **argv) {
@@ -339,7 +406,11 @@ int main(int argc, char **argv) {
 	moveArmcloseto();
 	moveGripperclose();
 	moveArmback();
+	moveArmfold();
 	moveArmright();
+	moveArmunfold();
+	moveArmdown();
+	/* moveArmright();
 	moveArmdown();
 	moveGripperopenagain();
 	moveArmup();
@@ -349,7 +420,7 @@ int main(int argc, char **argv) {
 	moveArmleft();
 	moveArmdownagain();
 	moveGripperopenagainagain();
-	moveArmbackagain();
+	moveArmbackagain();*/
 
 	sleep(1);
 	ros::shutdown();
