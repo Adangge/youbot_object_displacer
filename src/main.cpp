@@ -85,6 +85,33 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
 	twist.linear.y = 0;
 	platformPublisher.publish(twist);
 } */
+// move arm close near
+void moveArmclosenear() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 5.84014;
+    jointvalues[1] = 1.846735;
+    jointvalues[2] = -1.8950;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(3).sleep();
+	
+}
+
+//put down the cube
+void moveGripperput() {
+	brics_actuator::JointPositions msg;
+	
+	// open gripper
+	msg = createGripperPositionCommand(0.0115);
+	gripperPublisher.publish(msg);
+
+	ros::Duration(2).sleep();
+}
 
 // start position
 void moveArmstart() {
@@ -391,7 +418,48 @@ void moveArmbackagain() {
 	
 }
 
+// move arm close to again again
+void moveArmclosetoagainagain() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	 
+    jointvalues[0] = 5.84014;
+    jointvalues[1] = 1.846735 ;
+    jointvalues[2] = -1.6580;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
 
+    ros::Duration(3).sleep();
+}
+
+// move gripper catch
+void moveGrippercatch() {
+	brics_actuator::JointPositions msg;
+	
+	msg = createGripperPositionCommand(0);
+	gripperPublisher.publish(msg);
+	ros::Duration(2).sleep();
+}
+
+// move arm unfold again again
+
+void moveArmunfoldagainagain() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 5.84014;
+    jointvalues[1] = 1.846735;
+    jointvalues[2] = -1.8950;
+    jointvalues[3] = 3.02356;
+    jointvalues[4] = 2.95;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(1).sleep();
+	
+}
 
 /* // move arm to right
 
@@ -571,6 +639,8 @@ int main(int argc, char **argv) {
 	sleep(1);
 
 	// movePlatform();
+	moveArmclosenear();
+	moveGripperput();
 	moveArmstart();
 	moveGripperopen();
 	moveArmcloseto();
@@ -591,6 +661,9 @@ int main(int argc, char **argv) {
 	moveArmdownagain();
 	moveGripperopenagainagain();
 	moveArmbackagain();
+	moveArmclosetoagainagain();
+	moveGrippercatch();
+	moveArmunfoldagainagain();
 	
 	/* moveArmright();
 	moveArmdown();
