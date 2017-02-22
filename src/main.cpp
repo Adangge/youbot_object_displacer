@@ -443,17 +443,17 @@ void moveGrippercatch() {
 	ros::Duration(2).sleep();
 }
 
-// move arm unfold again again
+// move arm fold again again
 
-void moveArmunfoldagainagain() {
+void moveArmfoldagainagain() {
 	brics_actuator::JointPositions msg;
 	std::vector<double> jointvalues(5);
 	
     jointvalues[0] = 5.84014;
-    jointvalues[1] = 1.846735;
-    jointvalues[2] = -1.8950;
-    jointvalues[3] = 3.02356;
-    jointvalues[4] = 2.95;
+    jointvalues[1] = 0.11;
+    jointvalues[2] = -0.11;
+    jointvalues[3] = 0.11;
+    jointvalues[4] = 0.11;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
@@ -663,7 +663,7 @@ int main(int argc, char **argv) {
 	moveArmbackagain();
 	moveArmclosetoagainagain();
 	moveGrippercatch();
-	moveArmunfoldagainagain();
+	moveArmfoldagainagain();
 	
 	/* moveArmright();
 	moveArmdown();
