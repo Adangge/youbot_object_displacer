@@ -85,6 +85,24 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
 	twist.linear.y = 0;
 	platformPublisher.publish(twist);
 } */
+
+// move arm in secure area
+void moveArminsecure() {
+	brics_actuator::JointPositions msg;
+	std::vector<double> jointvalues(5);
+	
+    jointvalues[0] = 5.84014;
+    jointvalues[1] = 0.11;
+    jointvalues[2] = -0.11;
+    jointvalues[3] = 0.11;
+    jointvalues[4] = 0.111;
+    msg = createArmPositionCommand(jointvalues);
+    armPublisher.publish(msg);
+
+    ros::Duration(3).sleep();
+	
+}
+
 // move arm close near
 void moveArmclosenear() {
 	brics_actuator::JointPositions msg;
@@ -192,7 +210,7 @@ void moveArmfold() {
     jointvalues[1] = 0.11;
     jointvalues[2] = -0.11;
     jointvalues[3] = 0.11;
-    jointvalues[4] = 0.11;
+    jointvalues[4] = 0.111;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
@@ -209,7 +227,7 @@ void moveArmright() {
     jointvalues[1] = 0.11;
     jointvalues[2] = -0.11;
     jointvalues[3] = 0.11;
-    jointvalues[4] = 0.11;
+    jointvalues[4] = 0.111;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
@@ -331,7 +349,7 @@ void moveArmfoldagain() {
     jointvalues[1] = 0.11;
     jointvalues[2] = -0.11;
     jointvalues[3] = 0.11;
-    jointvalues[4] = 0.11;
+    jointvalues[4] = 0.111;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
@@ -349,7 +367,7 @@ void moveArmleft() {
     jointvalues[1] = 0.11;
     jointvalues[2] = -0.11;
     jointvalues[3] = 0.11;
-    jointvalues[4] = 0.11;
+    jointvalues[4] = 0.111;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
@@ -453,7 +471,7 @@ void moveArmfoldagainagain() {
     jointvalues[1] = 0.11;
     jointvalues[2] = -0.11;
     jointvalues[3] = 0.11;
-    jointvalues[4] = 0.11;
+    jointvalues[4] = 0.111;
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
@@ -639,6 +657,7 @@ int main(int argc, char **argv) {
 	sleep(1);
 
 	// movePlatform();
+	moveArminsecure();
 	moveArmclosenear();
 	moveGripperput();
 	moveArmstart();
