@@ -489,7 +489,9 @@ void moveArmfoldagainagain() {
     armPublisher.publish(msg);
 
     ros::Duration(1).sleep();
-	
+
+}
+
 	// close gripper
 void moveGrippercloseclose() {
 	brics_actuator::JointPositions msg;
