@@ -144,7 +144,7 @@ void moveArmstart() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(1).sleep();
 	
 }
 	
@@ -156,7 +156,7 @@ void moveGripperopen() {
 	msg = createGripperPositionCommand(0.0115);
 	gripperPublisher.publish(msg);
 
-	ros::Duration(2).sleep();
+	ros::Duration(1).sleep();
 }
 
 // move close to the cube
@@ -172,7 +172,7 @@ void moveArmcloseto() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(1).sleep();
 }
 
 // close gripper
@@ -231,7 +231,7 @@ void moveArmright() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(3).sleep();
 	
 }
 
@@ -353,7 +353,7 @@ void moveArmfoldagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(3).sleep();
 	
 }
 
@@ -388,7 +388,7 @@ void moveArmunfoldagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(1).sleep();
 	
 }
 
@@ -416,11 +416,11 @@ void moveGripperopenagainagain() {
 	msg = createGripperPositionCommand(0.0115);
 	gripperPublisher.publish(msg);
 
-	ros::Duration(2).sleep();
+	ros::Duration(1).sleep();
 }
 
 // move arm up again
-void moveArmbackagain() {
+/*void moveArmbackagain() {
 	brics_actuator::JointPositions msg;
 	std::vector<double> jointvalues(5);
 	
@@ -459,7 +459,7 @@ void moveGrippercatch() {
 	msg = createGripperPositionCommand(0);
 	gripperPublisher.publish(msg);
 	ros::Duration(2).sleep();
-}
+} */
 
 // move arm fold again again
 
@@ -475,7 +475,7 @@ void moveArmfoldagainagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(1).sleep();
 	
 }
 
