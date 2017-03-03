@@ -679,9 +679,9 @@ int main(int argc, char **argv) {
 	moveArmunfoldagain();
 	moveArmdownagain();
 	moveGripperopenagainagain();
-	moveArmbackagain();
-	moveArmclosetoagainagain();
-	moveGrippercatch();
+	//moveArmbackagain();
+	//moveArmclosetoagainagain();
+	//moveGrippercatch();
 	moveArmfoldagainagain();
 	
 	/* moveArmright();
