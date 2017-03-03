@@ -99,12 +99,12 @@ void moveArminsecure() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
 // move arm close near
-void moveArmclosenear() {
+/* void moveArmclosenear() {
 	brics_actuator::JointPositions msg;
 	std::vector<double> jointvalues(5);
 	
@@ -116,7 +116,7 @@ void moveArmclosenear() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -128,8 +128,8 @@ void moveGripperput() {
 	msg = createGripperPositionCommand(0.0115);
 	gripperPublisher.publish(msg);
 
-	ros::Duration(2).sleep();
-}
+	ros::Duration(0).sleep();
+} */
 
 // start position
 void moveArmstart() {
@@ -144,7 +144,7 @@ void moveArmstart() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(0).sleep();
 	
 }
 	
@@ -156,7 +156,7 @@ void moveGripperopen() {
 	msg = createGripperPositionCommand(0.0115);
 	gripperPublisher.publish(msg);
 
-	ros::Duration(2).sleep();
+	ros::Duration(0).sleep();
 }
 
 // move close to the cube
@@ -172,7 +172,7 @@ void moveArmcloseto() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(0).sleep();
 }
 
 // close gripper
@@ -181,7 +181,7 @@ void moveGripperclose() {
 	
 	msg = createGripperPositionCommand(0);
 	gripperPublisher.publish(msg);
-	ros::Duration(3).sleep();
+	ros::Duration(0).sleep();
 }
 
 // move arm back to the Ausgangsposition
@@ -197,7 +197,7 @@ void moveArmback() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -214,7 +214,7 @@ void moveArmfold() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -231,7 +231,7 @@ void moveArmright() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -248,7 +248,7 @@ void moveArmunfold() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -265,7 +265,7 @@ void moveArmdown() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(0).sleep();
 
 }
 
@@ -277,7 +277,7 @@ void moveGripperopenagain() {
 	msg = createGripperPositionCommand(0.0115);
 	gripperPublisher.publish(msg);
 
-	ros::Duration(2).sleep();
+	ros::Duration(0).sleep();
 }
 
 // move the arm back 
@@ -293,7 +293,7 @@ void moveArmup() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -310,7 +310,7 @@ void moveArmclosetoagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(0).sleep();
 
 }
 
@@ -320,7 +320,7 @@ void moveGrippercloseagain() {
 	
 	msg = createGripperPositionCommand(0);
 	gripperPublisher.publish(msg);
-	ros::Duration(2).sleep();
+	ros::Duration(0).sleep();
 }
 
 // move arm up again
@@ -336,7 +336,7 @@ void moveArmupagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -353,7 +353,7 @@ void moveArmfoldagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -371,7 +371,7 @@ void moveArmleft() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(5).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -388,7 +388,7 @@ void moveArmunfoldagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(2).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -406,7 +406,7 @@ void moveArmdownagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(0).sleep();
 }
 
 // open the gripper
@@ -416,7 +416,7 @@ void moveGripperopenagainagain() {
 	msg = createGripperPositionCommand(0.0115);
 	gripperPublisher.publish(msg);
 
-	ros::Duration(3).sleep();
+	ros::Duration(0).sleep();
 }
 
 // move arm up again
@@ -432,7 +432,7 @@ void moveArmbackagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(1).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -449,7 +449,7 @@ void moveArmclosetoagainagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(3).sleep();
+    ros::Duration(0).sleep();
 }
 
 // move gripper catch
@@ -458,7 +458,7 @@ void moveGrippercatch() {
 	
 	msg = createGripperPositionCommand(0);
 	gripperPublisher.publish(msg);
-	ros::Duration(2).sleep();
+	ros::Duration(0).sleep();
 }
 
 // move arm fold again again
@@ -475,7 +475,7 @@ void moveArmfoldagainagain() {
     msg = createArmPositionCommand(jointvalues);
     armPublisher.publish(msg);
 
-    ros::Duration(1).sleep();
+    ros::Duration(0).sleep();
 	
 }
 
@@ -658,8 +658,8 @@ int main(int argc, char **argv) {
 
 	// movePlatform();
 	moveArminsecure();
-	moveArmclosenear();
-	moveGripperput();
+	// moveArmclosenear();
+	// moveGripperput();
 	moveArmstart();
 	moveGripperopen();
 	moveArmcloseto();
