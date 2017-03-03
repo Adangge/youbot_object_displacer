@@ -86,6 +86,17 @@ brics_actuator::JointPositions createGripperPositionCommand(double newPosition) 
 	platformPublisher.publish(twist);
 } */
 
+// open the gripper
+
+void moveGripperopenopen() {
+	brics_actuator::JointPositions msg;
+	
+	msg = createGripperPositionCommand(0.0115);
+	gripperPublisher.publish(msg);
+
+	ros::Duration(0).sleep();
+}
+
 // move arm in secure area
 void moveArminsecure() {
 	brics_actuator::JointPositions msg;
@@ -419,6 +430,7 @@ void moveGripperopenagainagain() {
 	ros::Duration(1).sleep();
 }
 
+
 // move arm up again
 /*void moveArmbackagain() {
 	brics_actuator::JointPositions msg;
@@ -461,6 +473,7 @@ void moveGrippercatch() {
 	ros::Duration(2).sleep();
 } */
 
+
 // move arm fold again again
 
 void moveArmfoldagainagain() {
@@ -477,6 +490,13 @@ void moveArmfoldagainagain() {
 
     ros::Duration(1).sleep();
 	
+	// close gripper
+void moveGrippercloseclose() {
+	brics_actuator::JointPositions msg;
+	
+	msg = createGripperPositionCommand(0);
+	gripperPublisher.publish(msg);
+	ros::Duration(0).sleep();
 }
 
 /* // move arm to right
@@ -657,6 +677,7 @@ int main(int argc, char **argv) {
 	sleep(1);
 
 	// movePlatform();
+	moveGripperopenopen();
 	moveArminsecure();
 	// moveArmclosenear();
 	// moveGripperput();
@@ -683,6 +704,7 @@ int main(int argc, char **argv) {
 	//moveArmclosetoagainagain();
 	//moveGrippercatch();
 	moveArmfoldagainagain();
+	moveGrippercloseclose();
 	
 	/* moveArmright();
 	moveArmdown();
